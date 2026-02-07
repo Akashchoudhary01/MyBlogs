@@ -54,7 +54,7 @@ userSchema.pre("save", async function () {
   this.password = hashedPassword;
 });
 
-//
+//5. Static Method: matchPassword (Login Check)
 userSchema.static("matchPassword", async function (email, password) {
   const user = await this.findOne({ email });
 
