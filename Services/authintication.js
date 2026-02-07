@@ -9,7 +9,8 @@ export const createTokenForUser = (user)=>{
         _id : user._id,
         email : user.email,
          profileImgURL: user. profileImgURL,
-         role : user.role
+         role : user.role,
+          fullName: user.fullName,
     };
     const token = JWT.sign(payload , secret , {
         expiresIn :'24h'

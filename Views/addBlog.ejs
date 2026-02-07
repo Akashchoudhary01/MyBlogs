@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <%- include('./Partials/Head.ejs') %>
+
+  <title>Add Blog</title>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <%- include('./Partials/Nav.ejs') %>
+
+  <div class="container mt-4">
+
+    <h2 class="mb-4 text-center">Create New Blog</h2>
+
+    <!-- Blog Form -->
+    <form action="/blog/addBlog" method="POST">
+
+      <!-- Title -->
+      <div class="form-floating mb-3">
+        <input 
+          type="text" 
+          class="form-control" 
+          id="title" 
+          name="title"
+          placeholder="Enter blog title"
+          required
+        >
+        <label for="title">Title</label>
+      </div>
+
+      <!-- Body -->
+      <div class="form-floating mb-3">
+        <textarea 
+          class="form-control" 
+          id="body" 
+          name="body"
+          placeholder="Write your blog here"
+          style="height: 200px"
+          required
+        ></textarea>
+        <label for="body">Blog Content</label>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary btn-lg">
+          Publish Blog
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+
+  <!-- Scripts -->
+  <%- include('./Partials/Script.ejs') %>
+
+</body>
+</html>

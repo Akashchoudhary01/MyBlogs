@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import mongoose  from 'mongoose';
 import cookieParser from 'cookie-parser';
 import {router} from './Routes/userRoute.js'
+import {blogRouter} from './Routes/blogRoute.js'
 import { checkForAuthintication } from './Middleware/authMiddleware.js';
 dotenv.config();
 
@@ -36,7 +37,10 @@ app.get("/" , (req , res) =>{
       user : req.user
     });
 })
+
+//route
 app.use('/user' , router);
+app.use('/blog' , blogRouter);
 
 app.listen(PORT , ()=>{
     console.log(`App is Listning on http://localhost:${PORT}`);
