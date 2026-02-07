@@ -1,4 +1,5 @@
-import mongoose from "mongoose";
+import mongoose, { model } from "mongoose";
+import {createHmac  , rendomBytes} from 'crypto';
 
 const userSchema = new mongoose.Schema({
     fullName : {
@@ -21,9 +22,33 @@ const userSchema = new mongoose.Schema({
         type : String,
         require : true,
     },
-    profileImg :{
+    profileImgURL :{
         type : String,
         default : '/public/images/default.png'
     },
+    role:{
+        type:String,
+        enum :[ "USER" ,"ADMIN"],
+        default : "USER"
+    }
+
+},{
+    timestamps : true
+});
+
+
+userSchema.pre('save' , function(next){
+    const user = this;
+    if(!user.isModified("password")) return;
+
+    const salt = rendomBytes(16).toString();
+    const hashedPassword = createHmac("sha256" , salt)
+    .update(user.password)
+    .digest("hex")
+    
+    this.salt = salt;
+    this.password = hashedPassword;
+    next();
 
 })
+export const USER = model("user" , userSchema);
