@@ -1,13 +1,13 @@
 import { Router } from "express";
-import { USER } from "../Models/userModels";
+import { USER } from "../Models/userModels.js";
 
 export const router = Router();
 
 router.get("/signin" , (req , res)=>{
-   return  req.render(signin)
+   return  res.render("signin")
 })
 router.get("/signup" , (req , res)=>{
-   return  req.render(signup)
+   return  res.render("signup")
 })
 router.post("/signup" , async (req , res)=>{
    const {fullName , email , password } = req.body;
@@ -18,9 +18,11 @@ router.post("/signup" , async (req , res)=>{
         email,
         password,
        })
-       return req.redirect("/");
+       return res.redirect("/");
    } catch (error) {
-    return req.redirect(signup) 
+    console.log(error);
+    
+    return res.redirect("/user/signup") 
    }
 
    

@@ -1,5 +1,5 @@
 import mongoose, { model } from "mongoose";
-import {createHmac  , rendomBytes} from 'crypto';
+import {createHmac  , randomBytes} from 'crypto';
 
 const userSchema = new mongoose.Schema({
     fullName : {
@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
     },
     salt :{
         type : String,
-        require : true,
+       
     },
     password :{
         type : String,
@@ -36,19 +36,21 @@ const userSchema = new mongoose.Schema({
     timestamps : true
 });
 
+// Pre-save Hook
+userSchema.pre("save", async function () {
+  // If password not changed, do nothing
+  if (!this.isModified("password")) return;
 
-userSchema.pre('save' , function(next){
-    const user = this;
-    if(!user.isModified("password")) return;
+  // Generate salt
+  const salt = randomBytes(16).toString("hex");
 
-    const salt = rendomBytes(16).toString();
-    const hashedPassword = createHmac("sha256" , salt)
-    .update(user.password)
-    .digest("hex")
-    
-    this.salt = salt;
-    this.password = hashedPassword;
-    next();
+  // Hash password
+  const hashedPassword = createHmac("sha256", salt)
+    .update(this.password)
+    .digest("hex");
 
-})
+  // Save hashed values
+  this.salt = salt;
+  this.password = hashedPassword;
+});
 export const USER = model("user" , userSchema);
