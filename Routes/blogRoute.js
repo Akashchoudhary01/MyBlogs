@@ -34,3 +34,15 @@ blogRouter.post("/addBlog", upload.single("coverImg"), async (req, res) => {
   });
   return res.redirect("/");
 });
+
+//
+blogRouter.get("/:id" , async(req , res)=>{
+    const blog = await BLOG.findById(req.params.id).populate("createdBy");
+    console.log(blog);
+    
+   return  res.render("blog" , {
+    user : req.user,
+    blog
+   });
+
+})

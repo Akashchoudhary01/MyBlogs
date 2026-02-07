@@ -11,7 +11,7 @@ const blogSchema = new mongoose.Schema({
     type: String,
     required: true,
     minLength: [5, "Blog should be at least 5 characters"],
-    maxLength: [500, "Blog should be at most 500 characters"],
+    
   },
 
   coverImg :{
