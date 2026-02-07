@@ -1,5 +1,6 @@
 import mongoose, { model } from "mongoose";
 import { createHmac, randomBytes } from "crypto";
+import { createTokenForUser } from "../Services/authintication.js";
 
 const userSchema = new mongoose.Schema(
   {
@@ -55,7 +56,7 @@ userSchema.pre("save", async function () {
 });
 
 //5. Static Method: matchPassword (Login Check)
-userSchema.static("matchPassword", async function (email, password) {
+userSchema.static("matchPasswordAndGenerateToken", async function (email, password) {
   const user = await this.findOne({ email });
 
   if (!user) throw new Error("User Not Found");
@@ -70,6 +71,7 @@ userSchema.static("matchPassword", async function (email, password) {
   if (userProvidedHash !== hashedPassword)
     throw new Error("Invalid Credintial");
 
-  return user;
+  const token = createTokenForUser(user);
+  return token;
 });
 export const USER = model("user", userSchema);

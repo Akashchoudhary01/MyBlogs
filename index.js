@@ -2,7 +2,9 @@ import express from 'express';
 import path from 'path';
 import dotenv from 'dotenv';
 import mongoose  from 'mongoose';
+import cookieParser from 'cookie-parser';
 import {router} from './Routes/userRoute.js'
+import { checkForAuthintication } from './Middleware/authMiddleware.js';
 dotenv.config();
 
 mongoose.connect(process.env.MONGODB_URL)
@@ -16,8 +18,12 @@ mongoose.connect(process.env.MONGODB_URL)
 const PORT = process.env.PORT || 3004;
 const app = express();
 
+//Middlewares
 //express middleware to handleform data
 app.use(express.urlencoded({extended :true}));
+//cookiePareser middleware
+app.use(cookieParser());
+app.use(checkForAuthintication("token"));
 
 app.set('view engine' , 'ejs');
 app.set('views' , path.resolve('./Views'));
@@ -26,7 +32,9 @@ app.set('views' , path.resolve('./Views'));
 app.use(express.json());
 
 app.get("/" , (req , res) =>{
-    res.render("Home");
+    res.render("Home" , {
+      user : req.user
+    });
 })
 app.use('/user' , router);
 
