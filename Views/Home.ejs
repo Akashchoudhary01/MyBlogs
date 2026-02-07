@@ -1,19 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%- include('./Partials/Head.ejs') %>
-    <title>Document</title>
+        <title>Document</title>
 </head>
+
 <body>
     <%- include('./Partials/Nav.ejs') %>
-    <div class="mt-3">
+       <div class="container mt-4">
 
-        <!-- <%=JSON.stringify(user)  %> -->
-    </div>
-    
-    
-    <%- include('./Partials/Script.ejs') %>
+  <% if (!blogs || blogs.length === 0) { %>
+    <p class="text-center fs-4">Create Your First Blog Now 🚀</p>
+  <% } %>
+
+  <div class="row g-4">
+
+    <% blogs.forEach(blog => { %>
+
+      <div class="col-sm-6 col-md-4 col-lg-3">
+
+        <div class="card h-100 shadow-sm">
+
+          <img 
+            src="<%= blog.coverImg %>" 
+            class="card-img-top" 
+            style="height:200px; object-fit:cover;"
+            alt="Blog Image"
+          >
+
+          <div class="card-body d-flex flex-column">
+
+            <h5 class="card-title">
+              <%= blog.title %>
+            </h5>
+
+            <a 
+              href="/blog/<%= blog._id %>" 
+              class="btn btn-primary mt-auto"
+            >
+              Read
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    <% }) %>
+
+  </div>
+
+</div>
+
+
+
+        <%- include('./Partials/Script.ejs') %>
 </body>
+
 </html>

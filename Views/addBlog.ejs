@@ -20,8 +20,16 @@
     <h2 class="mb-4 text-center">Create New Blog</h2>
 
     <!-- Blog Form -->
-    <form action="/blog/addBlog" method="POST">
+    <form action="/blog/addBlog" method="POST" enctype="multipart/form-data">
 
+      <!-- Cover image -->
+      <div class="form-floating mb-3">
+        <input 
+          type="file" 
+          class="form-control" 
+          id="file" 
+          name="coverImg"
+      </div>
       <!-- Title -->
       <div class="form-floating mb-3">
         <input 
@@ -49,7 +57,7 @@
       </div>
 
       <!-- Submit Button -->
-      <div class="d-grid">
+      <div class="d-grid mb-3">
         <button type="submit" class="btn btn-primary btn-lg">
           Publish Blog
         </button>

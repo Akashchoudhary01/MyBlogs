@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import {router} from './Routes/userRoute.js'
 import {blogRouter} from './Routes/blogRoute.js'
 import { checkForAuthintication } from './Middleware/authMiddleware.js';
+import { BLOG } from './Models/blogModels.js';
 dotenv.config();
 
 mongoose.connect(process.env.MONGODB_URL)
@@ -31,10 +32,13 @@ app.set('views' , path.resolve('./Views'));
 
 
 app.use(express.json());
+app.use(express.static(path.resolve('./public')));
 
-app.get("/" , (req , res) =>{
+app.get("/" ,async (req , res) =>{
+  const allBlogs = await BLOG.find({})
     res.render("Home" , {
-      user : req.user
+      user : req.user,
+      blogs : allBlogs
     });
 })
 
