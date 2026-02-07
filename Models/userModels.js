@@ -1,40 +1,40 @@
 import mongoose, { model } from "mongoose";
-import {createHmac  , randomBytes} from 'crypto';
+import { createHmac, randomBytes } from "crypto";
 
-const userSchema = new mongoose.Schema({
-    fullName : {
-        type : String,
-        required : true,
-        minLength : [3 , "Name Should minimum 3 Char" ],
-        maxLength : [30 , "Name Should maximum 30 Char" ],
-
+const userSchema = new mongoose.Schema(
+  {
+    fullName: {
+      type: String,
+      required: true,
+      minLength: [3, "Name Should minimum 3 Char"],
+      maxLength: [30, "Name Should maximum 30 Char"],
     },
-    email :{
-        type : String,
-         required : true,
-         unique : true
+    email: {
+      type: String,
+      required: true,
+      unique: true,
     },
-    salt :{
-        type : String,
-       
+    salt: {
+      type: String,
     },
-    password :{
-        type : String,
-        require : true,
+    password: {
+      type: String,
+      require: true,
     },
-    profileImgURL :{
-        type : String,
-        default : '/public/images/default.png'
+    profileImgURL: {
+      type: String,
+      default: "/public/images/default.png",
     },
-    role:{
-        type:String,
-        enum :[ "USER" ,"ADMIN"],
-        default : "USER"
-    }
-
-},{
-    timestamps : true
-});
+    role: {
+      type: String,
+      enum: ["USER", "ADMIN"],
+      default: "USER",
+    },
+  },
+  {
+    timestamps: true,
+  },
+);
 
 // Pre-save Hook
 userSchema.pre("save", async function () {
@@ -53,4 +53,23 @@ userSchema.pre("save", async function () {
   this.salt = salt;
   this.password = hashedPassword;
 });
-export const USER = model("user" , userSchema);
+
+//
+userSchema.static("matchPassword", async function (email, password) {
+  const user = await this.findOne({ email });
+
+  if (!user) throw new Error("User Not Found");
+
+  const salt = user.salt;
+  const hashedPassword = user.password;
+
+  const userProvidedHash = createHmac("sha256", salt)
+    .update(password)
+    .digest("hex");
+
+  if (userProvidedHash !== hashedPassword)
+    throw new Error("Invalid Credintial");
+
+  return user;
+});
+export const USER = model("user", userSchema);

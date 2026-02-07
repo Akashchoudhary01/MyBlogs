@@ -5,20 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%- include('./Partials/Head.ejs') %>
-        <title>Signup</title>
+        <title>Signin</title>
 </head>
 
 <body>
     <%- include('./Partials/Nav.ejs') %>
 
         <div class="container mt-4">
-            <h1>Signup Page</h1>
-            <form action="/user/signup" method="post">
-                <div class="mb-3">
-                    <label for="exampleInputName" class="form-label">Full Name</label>
-                    <input type="text" class="form-control" name="fullName" id="fullName">
-                    <div id="emailHelp" class="form-text">Enter Your Full Name</div>
-                </div>
+            <h1>SignIn Page</h1>
+            <form action="/user/signin" method="post">
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Email address</label>
                     <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp">
