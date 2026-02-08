@@ -28,7 +28,7 @@ app.use(cookieParser());
 app.use(checkForAuthintication("token"));
 
 app.set('view engine' , 'ejs');
-app.set('views' , path.resolve('./Views'));
+app.set('views' , path.resolve('./views'));
 
 
 app.use(express.json());
@@ -36,7 +36,7 @@ app.use(express.static(path.resolve('./public')));
 
 app.get("/" ,async (req , res) =>{
   const allBlogs = await BLOG.find({})
-    res.render("Home" , {
+    res.render("home" , {
       user : req.user,
       blogs : allBlogs
     });
