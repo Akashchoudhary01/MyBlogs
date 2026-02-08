@@ -104,9 +104,12 @@
                                 <div class="container mt-2">
                                     <% comments.forEach(comment => { %>
                                         <img src="<%= '/images/default.png' %>" width="25" height="25"
-                                    class="rounded-circle border" alt="Author">
-                                    <p><%= comment.createdBy.fullName  %></p>
-                                    <pre><%= comment.content  %></pre>
+                                    class="rounded-circle border" alt="Author"><span>
+
+                                        <p><%= comment.createdBy.fullName  %></p>
+                                    </span>
+                                </img>
+                                    <p><%= comment.content  %></p>
                                      
                                     <% }) %>
 
