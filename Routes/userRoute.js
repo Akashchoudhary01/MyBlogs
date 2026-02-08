@@ -4,10 +4,15 @@ import { USER } from "../Models/userModels.js";
 export const router = Router();
 
 router.get("/signin" , (req , res)=>{
-   return  res.render("signin")
+   return  res.render("signin" , {
+    error : null
+   })
 })
 router.get("/signup" , (req , res)=>{
-   return  res.render("signup")
+   return  res.render("signup", {
+    error : null
+   }
+   )
 })
 //logout
 router.get("/logout" , (req , res)=>{
@@ -32,19 +37,24 @@ router.post("/signin" , async (req , res)=>{
      
     
 })
-router.post("/signup" , async (req , res)=>{
-   const {fullName , email , password } = req.body;
-   try {
-    
-       await USER.create({
-        fullName,
-        email,
-        password,
-       })
-       return res.redirect("/user/signin");
-   } catch (error) {
-    // console.log(error);
-    
-    return res.redirect("/user/signup") 
-   }
-})
+router.post("/signup", async (req, res) => {
+  const { fullName, email, password } = req.body;
+
+  try {
+    await USER.create({
+      fullName,
+      email,
+      password,
+    });
+
+    return res.redirect("/user/signin");
+
+  } catch (error) {
+
+    // console.log(error); // For debugging
+
+    return res.render("signup", {
+      error: "Email already exists or something went wrong"
+    });
+  }
+});
