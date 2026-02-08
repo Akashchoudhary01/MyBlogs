@@ -41,9 +41,9 @@ router.post("/signup" , async (req , res)=>{
         email,
         password,
        })
-       return res.redirect("/signin");
+       return res.redirect("/user/signin");
    } catch (error) {
-    console.log(error);
+    // console.log(error);
     
     return res.redirect("/user/signup") 
    }
