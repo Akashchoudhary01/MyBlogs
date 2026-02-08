@@ -1,49 +1,99 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary"  data-bs-theme="dark" >
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Blogify</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm sticky-top">
+  <div class="container">
+
+    <!-- Brand -->
+    <a class="navbar-brand fw-bold fs-4" href="/">
+      Blogify
+    </a>
+
+    <!-- Toggle Button -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
+
+    <!-- Menu -->
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav">
+
+      <!-- Left Links -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/">Home</a>
+          <a class="nav-link active fw-semibold" href="/">
+            Home
+          </a>
         </li>
-        
+
         <% if (locals.user) { %>
+
           <li class="nav-item">
-            <a class="nav-link" href="/blog/addBlog">Add blog</a>
-          </li>
-         
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <%=locals.user.fullName %>
+            <a class="nav-link fw-semibold" href="/blog/addBlog">
+              + Add Blog
             </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="/user/logout">Logout</a></li>
-              <!-- <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li> -->
-            </ul>
           </li>
-        <% } else { %>
-          <li class="nav-item">
-            <a class="nav-link" href="/user/signup">create Account</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/user/signin">SignIn</a>
-          </li>
-        <% }%>
+
+        <% } %>
+
       </ul>
+
+      <!-- Right User Section -->
+      <ul class="navbar-nav align-items-center">
+
+        <% if (locals.user) { %>
+
+          <li class="nav-item dropdown">
+
+            <a
+              class="nav-link dropdown-toggle fw-semibold"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              👤 <%= locals.user.fullName %>
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end shadow">
+
+              <li>
+                <a class="dropdown-item" href="/user/logout">
+                  🚪 Logout
+                </a>
+              </li>
+
+            </ul>
+
+          </li>
+
+        <% } else { %>
+
+          <li class="nav-item">
+            <a class="nav-link fw-semibold" href="/user/signup">
+              Create Account
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a
+              class="btn btn-outline-light ms-2 px-3"
+              href="/user/signin"
+            >
+              Sign In
+            </a>
+          </li>
+
+        <% } %>
+
+      </ul>
+
     </div>
   </div>
 </nav>
-
-<div class="container mt-2">
-
-  <% if (locals.error) { %>
-    
-    <div class="alert alert-danger" role="alert">
-      <%= locals.error  %>
-    </div>
-    <% } %>
-  </div>
